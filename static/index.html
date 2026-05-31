@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,72 +9,85 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
-<div class="shell">
+  <div class="shell">
 
-  <header>
-    <div class="header-left">
-      <h1><span class="dot"></span><span id="hostname-title">—</span></h1>
-      <p class="subtitle" id="subtitle">—</p>
-    </div>
-    <div class="header-right">
-      <span class="platform-pill" id="platform-badge">—</span>
-      <span class="refresh-note" id="last-updated">—</span>
-    </div>
-  </header>
-
-  <section class="vitals">
-
-    <div class="card ram-block">
-      <div class="card-label">Memory</div>
-      <div class="ram-row">
-        <div class="ram-bar-wrap"><div class="ram-bar" id="ram-bar"></div></div>
+    <header>
+      <div class="header-left">
+        <h1><span class="dot"></span><span id="hostname-title">—</span></h1>
+        <p class="subtitle" id="subtitle">—</p>
       </div>
-      <div class="ram-meta">
-        <span id="ram-used">—</span>
-        <span>used of</span>
-        <span id="ram-total">—</span>
-        <span class="ram-pct" id="ram-pct">—</span>
+      <div class="header-right">
+        <span class="platform-pill" id="platform-badge">—</span>
+        <span class="refresh-note" id="last-updated">—</span>
       </div>
-    </div>
+    </header>
 
-    <div class="card">
-      <div class="card-label">Uptime</div>
-      <div class="card-value" id="uptime">—</div>
-    </div>
+    <section class="vitals">
 
-    <div class="card">
-      <div class="card-label">Architecture</div>
-      <div class="card-value" id="arch">—</div>
-    </div>
+      <div class="card ram-block">
+        <div class="card-label">Memory</div>
+        <div class="ram-row">
+          <div class="ram-bar-wrap">
+            <div class="ram-bar" id="ram-bar"></div>
+          </div>
+        </div>
+        <div class="ram-meta">
+          <span id="ram-used">—</span>
+          <span>used of</span>
+          <span id="ram-total">—</span>
+          <span class="ram-pct" id="ram-pct">—</span>
+        </div>
+      </div>
 
-    <div class="card">
-      <div class="card-label">User</div>
-      <div class="card-value" id="username">—</div>
-    </div>
+      <div class="card">
+        <div class="card-label">Uptime</div>
+        <div class="card-value" id="uptime">—</div>
+      </div>
 
-    <div class="card">
-      <div class="card-label">CPU</div>
-      <div class="card-value" id="cpu-speed">—</div>
-      <div class="card-sub" id="cpu-model">—</div>
-    </div>
+      <div class="card">
+        <div class="card-label">Architecture</div>
+        <div class="card-value" id="arch">—</div>
+      </div>
 
-    <div class="card">
-      <div class="card-label">Kernel</div>
-      <div class="card-value" id="release">—</div>
-    </div>
+      <div class="card">
+        <div class="card-label">User</div>
+        <div class="card-value" id="username">—</div>
+      </div>
 
-  </section>
+      <div class="card">
+        <div class="card-label">CPU</div>
+        <div class="card-value" id="cpu-speed">—</div>
+        <div class="card-sub" id="cpu-model">—</div>
+      </div>
 
-  <section class="logs-section">
-    <div class="logs-header">
-      <h2>runner.log</h2>
-      <span class="log-meta" id="log-lines">—</span>
-    </div>
-    <pre id="log-output">—</pre>
-  </section>
+      <div class="card">
+        <div class="card-label">Kernel</div>
+        <div class="card-value" id="release">—</div>
+      </div>
 
-</div>
-<script src="/static/main.js"></script>
+    </section>
+
+    <section class="logs-section">
+      <div class="logs-header">
+        <h2>runner.log</h2>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="log-meta" id="log-lines">—</span>
+          <label
+            style="font-family:var(--font-mono);font-size:10px;color:var(--dim);display:flex;align-items:center;gap:5px;">
+            tail
+            <input type="number" id="tail-input" value="100" min="1" max="10000" style="width:56px;font-family:var(--font-mono);font-size:11px;
+               background:var(--bg);border:1px solid var(--border);border-radius:4px;
+               color:var(--text);padding:2px 6px;text-align:right;">
+          </label>
+        </div>
+      </div>
+      <pre id="log-output">—</pre>
+    </section>
+
+  </div>
+  <script src="/static/main.js"></script>
 </body>
+
 </html>

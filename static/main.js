@@ -1,7 +1,9 @@
 async function fetchAndRender() {
+  const tail = parseInt(document.getElementById('tail-input')?.value, 10) || 100
+
   let d
   try {
-    const res = await fetch('/api/data')
+    const res = await fetch('/api/data?tail=' + tail)
     if (!res.ok) throw new Error('HTTP ' + res.status)
     d = await res.json()
   } catch (err) {
@@ -9,14 +11,14 @@ async function fetchAndRender() {
     return
   }
 
-  // Header
   document.title = 'Dashboard — ' + d.hostname
   document.getElementById('hostname-title').textContent = d.hostname
   document.getElementById('platform-badge').textContent = d.platform
   document.getElementById('subtitle').textContent =
     d.username + '@' + d.hostname + '  ·  ' + d.release
+  document.getElementById('last-updated').textContent =
+    'updated ' + new Date().toLocaleTimeString()
 
-  // Vitals
   document.getElementById('arch').textContent      = d.arch
   document.getElementById('username').textContent  = d.username
   document.getElementById('release').textContent   = d.release
@@ -24,7 +26,6 @@ async function fetchAndRender() {
   document.getElementById('cpu-model').textContent = d.cpuModel
   document.getElementById('cpu-speed').textContent = d.cpuSpeed + ' MHz'
 
-  // RAM
   const usedBytes = d.totalMem - d.freeMem
   const pct       = Math.round((usedBytes / d.totalMem) * 100)
   const bar       = document.getElementById('ram-bar')
@@ -35,7 +36,6 @@ async function fetchAndRender() {
   document.getElementById('ram-total').textContent = toGB(d.totalMem)
   document.getElementById('ram-pct').textContent   = pct + '%'
 
-  // Logs
   const lines = d.logs.split('\n')
   document.getElementById('log-lines').textContent = lines.length + ' lines'
 
@@ -63,6 +63,7 @@ function colorLine(line) {
   return escaped
 }
 
-// Initial load + poll every 5s
+document.getElementById('tail-input').addEventListener('change', fetchAndRender)
+
 fetchAndRender()
 setInterval(fetchAndRender, 5000)
