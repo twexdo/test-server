@@ -5,7 +5,7 @@ import fs from 'fs'
 
 const app = new Hono()
 
-function formatBytes(bytes) {
+function formatBytes(bytes: any) {
   return (bytes / 1024 / 1024 / 1024).toFixed(2) + ' GB'
 }
 
@@ -16,7 +16,7 @@ app.get('/', (c) => {
 
   try {
     logs = fs.readFileSync('/home/adrian/Coding/runner.log', 'utf8')
-  } catch (err) {
+  } catch (err: any) {
     logs = err.message
   }
 
