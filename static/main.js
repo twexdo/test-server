@@ -11,7 +11,7 @@ async function fetchAndRender() {
     return
   }
 
-  document.title = 'Dashboard — ' + d.hostname
+  document.title = document.title + ' — ' + d.hostname
   document.getElementById('hostname-title').textContent = d.hostname
   document.getElementById('platform-badge').textContent = d.platform
   document.getElementById('subtitle').textContent =
