@@ -5,7 +5,11 @@ const app = new Hono()
 
 app.get('/', (c) => {
   return c.text(`Hello this pc belongs to Stef Vasile Adrian!
-     And its running from ${os.hostname}`)
+And its running from ${os.hostname}
+
+This is version 1
+
+`)
 })
 
 serve({
