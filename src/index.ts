@@ -45,6 +45,6 @@ app.get('/api/data', (c) => {
 })
 
 serve(
-  { fetch: app.fetch, port: 3000 },
+  { fetch: app.fetch, port: 8080 },
   (info) => console.log(`Server running on http://localhost:${info.port}`)
 )
