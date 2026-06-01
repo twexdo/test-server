@@ -3,6 +3,7 @@ import { promisify } from 'util'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+import { writeLog } from '../index.js'
 
 const execFileAsync = promisify(execFile)
 
@@ -107,8 +108,13 @@ export async function getServerStatus(): Promise<ServerStatus> {
       uptime: await getServiceUptime(),
       motd: result.motd?.clean ?? null,
     }
-  } catch {
+  } catch(err) {
     // Server is active in systemd but not yet accepting connections (starting up)
+        await writeLog({
+          type: 'error',
+          error: err instanceof Error ? err.message : String(err),
+          stack: err instanceof Error ? err.stack : undefined,
+        })
     return {
       online: true,
       version: null,
