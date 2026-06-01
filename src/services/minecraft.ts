@@ -107,7 +107,8 @@ export async function getServerStatus(): Promise<ServerStatus> {
       maxPlayers: result.players.max,
       uptime: await getServiceUptime(),
       motd: result.motd?.clean ?? null,
-    }
+      cool:true,
+    } as any
   } catch(err) {
     // Server is active in systemd but not yet accepting connections (starting up)
         await writeLog({
