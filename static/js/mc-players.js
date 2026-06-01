@@ -17,7 +17,7 @@ async function loadPlayers() {
     if (players.length === 0) {
       grid.innerHTML = '<div class="empty-state" style="width:100%">No players online</div>'
     } else {
-      grid.innerHTML = players.map(name => `
+      grid.innerHTML = players.map(({ name }) => `
         <div class="player-chip">
           <img class="player-avatar"
                src="https://mc-heads.net/avatar/${encodeURIComponent(name)}/20"
@@ -30,9 +30,9 @@ async function loadPlayers() {
 
     // Table
     if (players.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="2" class="empty-state">No players online</td></tr>'
+      tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No players online</td></tr>'
     } else {
-      tbody.innerHTML = players.map(name => `
+      tbody.innerHTML = players.map(({ name , online , lastSeen }) => `
         <tr>
           <td>
             <div style="display:flex;align-items:center;gap:8px">
@@ -43,7 +43,8 @@ async function loadPlayers() {
               ${escapeHtml(name)}
             </div>
           </td>
-          <td><span class="status-badge online"><span class="status-dot"></span>Online</span></td>
+          <td><span class="status-badge ${online ? 'online' : 'offline'}"><span class="status-dot"></span>${online ? 'Online' : 'Offline'}</span></td>
+          <td>${new Date(lastSeen).toLocaleString()}</td>
         </tr>
       `).join('')
     }

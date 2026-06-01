@@ -18,6 +18,7 @@ import {
   startServer,
   stopServer,
   restartServer,
+  getPlayers,
 } from '../services/minecraft.js'
 
 const mc = new Hono()
@@ -48,7 +49,7 @@ mc.get('/status', async (c) => {
 
 mc.get('/players', async (c) => {
   try {
-    const players = await getPlayerList()
+    const players = await getPlayers()
     return c.json({ success: true, players, count: players.length })
   } catch (err) {
     console.error('[minecraft/players]', err)

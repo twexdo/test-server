@@ -1,8 +1,8 @@
 import { execFile } from 'child_process'
-import { promisify } from 'util'
 import fs from 'fs'
-import path from 'path'
 import os from 'os'
+import path from 'path'
+import { promisify } from 'util'
 import { writeLog } from '../index.js'
 
 const execFileAsync = promisify(execFile)
@@ -147,14 +147,43 @@ async function getServiceUptime(): Promise<number | null> {
 
 // ── Player list ──────────────────────────────────────────────────────────────
 
-export async function getPlayerList(): Promise<string[]> {
+export async function getPlayerList(): Promise<{ name: string, id: string }[]> {
   try {
     const { status } = await import('minecraft-server-util')
     const result = await status(MC_HOST, MC_PORT, { timeout: 3000 })
-    return (result.players.sample ?? []).map((p: { name: string }) => p.name)
+    return (result.players.sample ?? []).map((p: { name: string, id:string }) => ({ name: p.name, id: p.id }))
   } catch {
     return []
   }
+}
+
+
+export interface PlayerInfo {
+  uuid: string
+  online: boolean
+  lastSeen: Date
+}
+
+export async function getPlayers(): Promise<PlayerInfo[]> {
+  const onlinePlayers = await getPlayerList()
+
+  const playerDataDir = path.join(MC_HOME, 'world', 'playerdata')
+
+  const files = fs.readdirSync(playerDataDir)
+
+  return files
+    .filter(f => f.endsWith('.dat'))
+    .map(file => {
+      const uuid = file.replace('.dat', '')
+      const stat = fs.statSync(path.join(playerDataDir, file))
+
+      return {
+        uuid,
+        name: onlinePlayers.find(p => p.id === uuid)?.name ?? 'Unknown',
+        online: onlinePlayers.some(p => p.id === uuid),
+        lastSeen: stat.mtime
+      }
+    })
 }
 
 // ── Logs ─────────────────────────────────────────────────────────────────────
