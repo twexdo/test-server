@@ -136,7 +136,7 @@ mc.post('/stop', async (c) => {
     return c.json({ success: true, message: 'Server stop requested' })
   } catch (err) {
     console.error('[minecraft/stop]', err)
-    return c.json({ success: false, message: 'Failed to stop server' }, 500)
+    return c.json({ success: false, message: 'Failed to stop server' ,err}, 500)
   }
 })
 
