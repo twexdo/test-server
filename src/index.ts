@@ -4,7 +4,7 @@ import fs from 'fs'
 import { Hono } from 'hono'
 import os from 'os'
 import path from 'path'
-
+import 'dotenv/config'; 
 import { requireAuth } from './middleware/auth.js'
 import authRouter from './routes/auth.js'
 import minecraftRouter from './routes/minecraft.js'
