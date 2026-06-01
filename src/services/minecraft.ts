@@ -160,6 +160,7 @@ export async function getPlayerList(): Promise<{ name: string, id: string }[]> {
 
 export interface PlayerInfo {
   uuid: string
+  name: string
   online: boolean
   lastSeen: Date
 }
@@ -167,9 +168,9 @@ export interface PlayerInfo {
 export async function getPlayers(): Promise<PlayerInfo[]> {
   const onlinePlayers = await getPlayerList()
 
-  const playerDataDir = path.join(MC_HOME, 'world', 'playerdata')
+  const playerDataDir = path.join(MC_HOME, 'world', 'players/data')
 
-  const files = fs.readdirSync(playerDataDir)
+  const files = fs.readdirSync(playerDataDir, 'utf8')
 
   return files
     .filter(f => f.endsWith('.dat'))
