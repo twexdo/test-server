@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="__CSRF_TOKEN__">
+  <title>Players — Minecraft Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="mc-layout">
+
+    <nav class="mc-nav">
+      <div class="mc-nav-logo">⛏ MC Dashboard</div>
+      <a href="/minecraft/">📊 Overview</a>
+      <a href="/minecraft/players.html">👥 Players</a>
+      <a href="/minecraft/logs.html">📋 Logs</a>
+      <a href="/minecraft/properties.html">⚙️ Properties</a>
+      <a href="/minecraft/backups.html">💾 Backups</a>
+      <div class="mc-nav-spacer"></div>
+      <div class="mc-nav-bottom">
+        <form id="logout-form" method="POST" action="/logout">
+          <input type="hidden" name="_csrf" value="">
+          <button class="btn-logout" type="submit">Sign out</button>
+        </form>
+      </div>
+    </nav>
+
+    <main class="mc-main">
+      <h1 class="mc-page-title">Players</h1>
+      <p class="mc-page-sub" id="last-updated">Loading…</p>
+
+      <div class="mc-section-header">
+        <span class="mc-section-title" id="player-count">—</span>
+        <button class="btn btn-ghost" id="btn-refresh" onclick="loadPlayers()">↺ Refresh</button>
+      </div>
+
+      <div id="players-grid" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px">
+        <div class="empty-state" style="width:100%">Loading player list…</div>
+      </div>
+
+      <div class="mc-table-wrap">
+        <table class="mc-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="players-table-body">
+            <tr><td colspan="2" class="empty-state">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/mc-common.js"></script>
+  <script src="/static/js/mc-players.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="__CSRF_TOKEN__">
+  <title>Overview — Minecraft Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="mc-layout">
+
+    <!-- Sidebar -->
+    <nav class="mc-nav">
+      <div class="mc-nav-logo">⛏ MC Dashboard</div>
+      <a href="/minecraft/">📊 Overview</a>
+      <a href="/minecraft/players.html">👥 Players</a>
+      <a href="/minecraft/logs.html">📋 Logs</a>
+      <a href="/minecraft/properties.html">⚙️ Properties</a>
+      <a href="/minecraft/backups.html">💾 Backups</a>
+      <div class="mc-nav-spacer"></div>
+      <div class="mc-nav-bottom">
+        <form id="logout-form" method="POST" action="/logout">
+          <input type="hidden" name="_csrf" value="">
+          <button class="btn-logout" type="submit">Sign out</button>
+        </form>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="mc-main">
+      <h1 class="mc-page-title">Overview</h1>
+      <p class="mc-page-sub" id="last-updated">Loading…</p>
+
+      <!-- Status + Actions -->
+      <div class="mc-section-header">
+        <span id="status-badge" class="status-badge offline">
+          <span class="status-dot"></span>
+          <span id="status-text">Offline</span>
+        </span>
+        <div class="mc-actions" style="margin-bottom:0">
+          <button class="btn btn-primary" id="btn-start">▶ Start</button>
+          <button class="btn btn-warn"    id="btn-restart">↺ Restart</button>
+          <button class="btn btn-danger"  id="btn-stop">■ Stop</button>
+        </div>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="mc-cards" style="margin-top:16px">
+        <div class="card">
+          <div class="card-label">Version</div>
+          <div class="card-value" id="card-version">—</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Players</div>
+          <div class="card-value" id="card-players">—</div>
+          <div class="card-sub" id="card-players-max"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Uptime</div>
+          <div class="card-value" id="card-uptime">—</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Load avg (1m)</div>
+          <div class="card-value" id="card-load">—</div>
+          <div class="card-sub" id="card-cpu-model"></div>
+        </div>
+
+        <!-- RAM bar card -->
+        <div class="card mc-card-wide">
+          <div class="card-label">Memory</div>
+          <div class="ram-row">
+            <div class="ram-bar-wrap">
+              <div class="ram-bar" id="ram-bar"></div>
+            </div>
+          </div>
+          <div class="ram-meta">
+            <span id="ram-used">—</span>
+            <span>used of</span>
+            <span id="ram-total">—</span>
+            <span class="ram-pct" id="ram-pct">—</span>
+          </div>
+        </div>
+
+        <!-- Disk bar card -->
+        <div class="card mc-card-wide">
+          <div class="card-label">Disk (server dir)</div>
+          <div class="ram-row">
+            <div class="ram-bar-wrap">
+              <div class="ram-bar" id="disk-bar"></div>
+            </div>
+          </div>
+          <div class="ram-meta">
+            <span id="disk-used">—</span>
+            <span>used of</span>
+            <span id="disk-total">—</span>
+            <span class="ram-pct" id="disk-pct">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOTD -->
+      <div id="motd-wrap" style="display:none;margin-bottom:24px">
+        <div class="mc-section-title" style="margin-bottom:6px">MOTD</div>
+        <div class="card" style="padding:12px 16px">
+          <span class="card-value" id="card-motd" style="font-size:13px"></span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Confirm modal -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal">
+      <div class="modal-title" id="modal-title">Confirm action</div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('confirm-modal')">Cancel</button>
+        <button class="btn btn-danger" id="modal-confirm-btn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/mc-common.js"></script>
+  <script src="/static/js/mc-overview.js"></script>
+</body>
+</html>

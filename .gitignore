@@ -28,3 +28,7 @@ lerna-debug.log*
 .DS_Store
 
 dist/
+
+# minecraft dashboard data (contain credentials/sessions)
+data/sessions.json
+data/users.json

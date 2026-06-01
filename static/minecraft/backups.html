@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="__CSRF_TOKEN__">
+  <title>Backups — Minecraft Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="mc-layout">
+
+    <nav class="mc-nav">
+      <div class="mc-nav-logo">⛏ MC Dashboard</div>
+      <a href="/minecraft/">📊 Overview</a>
+      <a href="/minecraft/players.html">👥 Players</a>
+      <a href="/minecraft/logs.html">📋 Logs</a>
+      <a href="/minecraft/properties.html">⚙️ Properties</a>
+      <a href="/minecraft/backups.html">💾 Backups</a>
+      <div class="mc-nav-spacer"></div>
+      <div class="mc-nav-bottom">
+        <form id="logout-form" method="POST" action="/logout">
+          <input type="hidden" name="_csrf" value="">
+          <button class="btn-logout" type="submit">Sign out</button>
+        </form>
+      </div>
+    </nav>
+
+    <main class="mc-main">
+      <h1 class="mc-page-title">Backups</h1>
+      <p class="mc-page-sub">World backups stored as tar.gz archives. Up to 10 backups are kept.</p>
+
+      <div class="mc-section-header">
+        <span class="mc-section-title" id="backup-count">Loading…</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost" onclick="loadBackups()">↺ Refresh</button>
+          <button class="btn btn-primary" id="btn-create" onclick="createBackup()">+ Create backup</button>
+        </div>
+      </div>
+
+      <div class="mc-table-wrap">
+        <table class="mc-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="backups-tbody">
+            <tr><td colspan="4" class="empty-state">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Restore confirm modal -->
+  <div class="modal-overlay" id="restore-modal">
+    <div class="modal">
+      <div class="modal-title">Restore backup?</div>
+      <div class="modal-body" id="restore-modal-body">
+        This will replace the current world folder with the selected backup.
+        The server should be stopped before restoring. This cannot be undone.
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('restore-modal')">Cancel</button>
+        <button class="btn btn-danger" id="restore-confirm-btn">Restore</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete confirm modal -->
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal">
+      <div class="modal-title">Delete backup?</div>
+      <div class="modal-body" id="delete-modal-body">
+        This backup will be permanently deleted.
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('delete-modal')">Cancel</button>
+        <button class="btn btn-danger" id="delete-confirm-btn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/mc-common.js"></script>
+  <script src="/static/js/mc-backups.js"></script>
+</body>
+</html>

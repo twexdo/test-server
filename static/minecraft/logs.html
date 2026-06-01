@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="__CSRF_TOKEN__">
+  <title>Logs — Minecraft Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="mc-layout">
+
+    <nav class="mc-nav">
+      <div class="mc-nav-logo">⛏ MC Dashboard</div>
+      <a href="/minecraft/">📊 Overview</a>
+      <a href="/minecraft/players.html">👥 Players</a>
+      <a href="/minecraft/logs.html">📋 Logs</a>
+      <a href="/minecraft/properties.html">⚙️ Properties</a>
+      <a href="/minecraft/backups.html">💾 Backups</a>
+      <div class="mc-nav-spacer"></div>
+      <div class="mc-nav-bottom">
+        <form id="logout-form" method="POST" action="/logout">
+          <input type="hidden" name="_csrf" value="">
+          <button class="btn-logout" type="submit">Sign out</button>
+        </form>
+      </div>
+    </nav>
+
+    <main class="mc-main">
+      <h1 class="mc-page-title">Logs</h1>
+      <p class="mc-page-sub" id="last-updated">Loading…</p>
+
+      <div class="mc-log-wrap">
+        <div class="mc-log-header">
+          <h2>latest.log</h2>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <input class="mc-log-search" type="text" id="log-search"
+                   placeholder="Filter logs…" oninput="filterLogs()">
+            <label style="font-family:var(--font-mono);font-size:10px;color:var(--dim);display:flex;align-items:center;gap:5px">
+              lines
+              <input type="number" id="lines-input" value="100" min="1" max="500"
+                     style="width:52px;font-family:var(--font-mono);font-size:11px;
+                            background:var(--bg);border:1px solid var(--border);border-radius:4px;
+                            color:var(--text);padding:2px 6px;text-align:right;"
+                     onchange="loadLogs()">
+            </label>
+            <label style="font-family:var(--font-mono);font-size:10px;color:var(--dim);display:flex;align-items:center;gap:5px">
+              <input type="checkbox" id="auto-refresh" checked> auto-refresh
+            </label>
+            <span class="mc-section-title" id="log-count"></span>
+          </div>
+        </div>
+        <pre class="mc-log-body" id="log-body">Loading…</pre>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/mc-common.js"></script>
+  <script src="/static/js/mc-logs.js"></script>
+</body>
+</html>

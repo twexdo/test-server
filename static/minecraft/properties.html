@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="__CSRF_TOKEN__">
+  <title>Properties — Minecraft Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="mc-layout">
+
+    <nav class="mc-nav">
+      <div class="mc-nav-logo">⛏ MC Dashboard</div>
+      <a href="/minecraft/">📊 Overview</a>
+      <a href="/minecraft/players.html">👥 Players</a>
+      <a href="/minecraft/logs.html">📋 Logs</a>
+      <a href="/minecraft/properties.html">⚙️ Properties</a>
+      <a href="/minecraft/backups.html">💾 Backups</a>
+      <div class="mc-nav-spacer"></div>
+      <div class="mc-nav-bottom">
+        <form id="logout-form" method="POST" action="/logout">
+          <input type="hidden" name="_csrf" value="">
+          <button class="btn-logout" type="submit">Sign out</button>
+        </form>
+      </div>
+    </nav>
+
+    <main class="mc-main">
+      <h1 class="mc-page-title">Properties</h1>
+      <p class="mc-page-sub">Editing server.properties — a backup is created automatically before saving.</p>
+
+      <div class="mc-section-header">
+        <span class="mc-section-title" id="props-status">Loading…</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost" onclick="loadProperties()">↺ Reload</button>
+          <button class="btn btn-primary" id="btn-save" onclick="confirmSave()">Save changes</button>
+        </div>
+      </div>
+
+      <div class="mc-props-form" id="props-form">
+        <div class="empty-state">Loading properties…</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Confirm save modal -->
+  <div class="modal-overlay" id="save-modal">
+    <div class="modal">
+      <div class="modal-title">Save server.properties?</div>
+      <div class="modal-body">
+        A backup of the world will be created automatically before saving.
+        The server may need to be restarted for some changes to take effect.
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('save-modal')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveProperties()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/mc-common.js"></script>
+  <script src="/static/js/mc-properties.js"></script>
+</body>
+</html>
