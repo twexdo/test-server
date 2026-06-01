@@ -25,6 +25,7 @@ export interface ServerStatus {
   maxPlayers: number
   uptime: number | null
   motd: string | null
+  cool?: string
 }
 
 export interface BackupInfo {
